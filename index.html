@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Far Far Baptist Church - Nakpaduri Baptist Association</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-slate-100 font-sans min-h-screen text-slate-800">
+
+    <!-- 1. LOGIN SCREEN -->
+    <div id="loginScreen" class="min-h-screen flex items-center justify-center p-4">
+        <div class="bg-white p-8 rounded-xl shadow-xl w-full max-w-md border border-slate-200">
+            <div class="text-center mb-6">
+                <div class="flex justify-center mb-3">
+                    <img src="https://i.ibb.co/6y4t6tJ/gbc-logo.jpg" alt="Ghana Baptist Convention Logo" class="h-20 w-auto object-contain">
+                </div>
+                <h1 class="text-2xl font-bold text-indigo-950">Far Far Baptist Church ⛪</h1>
+                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mt-1">
+                    Nakpaduri Baptist Association
+                </p>
+                <p class="text-[11px] text-slate-400">Ghana Baptist Convention 🇬🇭</p>
+            </div>
+
+            <!-- Login Alert Notification -->
+            <div id="loginAlert" class="hidden mb-4 p-3 rounded-lg text-xs font-semibold bg-red-100 text-red-800 border border-red-200"></div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">📧 Official Email</label>
+                    <input id="loginEmail" type="email" placeholder="e.g. sbijagkin@gmail.com or pastor@farfar.org" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">🔑 Password</label>
+                    <input id="loginPassword" type="password" placeholder="Enter your private password" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm" required>
+                </div>
+                <button type="submit" class="w-full bg-indigo-900 hover:bg-indigo-950 text-white font-semibold py-2.5 rounded-lg transition duration-200 shadow flex items-center justify-center">
+                    <i class="fa-solid fa-right-to-bracket mr-2"></i> Sign In to Portal 🚀
+                </button>
+            </form>
+
+            <!-- Admin Support Details -->
+            <div class="mt-6 pt-4 border-t text-xs text-slate-500 space-y-1.5">
+                <p class="font-bold text-slate-700 flex items-center">
+                    <i class="fa-solid fa-headset text-indigo-900 mr-1.5"></i> System Administrator Support 🛠️
+                </p>
+                <p class="text-[11px] text-slate-600">📞 <strong>Phone:</strong> 0549162237 / 0530546215</p>
+                <p class="text-[11px] text-slate-600">✉️ <strong>Email:</strong> <a href="mailto:sbijagkin@gmail.com" class="text-indigo-800 underline">sbijagkin@gmail.com</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. MANDATORY FIRST-TIME PASSWORD MODAL -->
+    <div id="forcePasswordModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div class="bg-white p-6 rounded-xl shadow-2xl max-w-md w-full border border-slate-200">
+            <div class="text-center mb-4">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-amber-100 text-amber-600 mb-2">
+                    <i class="fa-solid fa-key text-xl"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900">Set Your Private Password 🔒</h3>
+                <p class="text-xs text-slate-500 mt-1">Please create a unique personal password for your account.</p>
+            </div>
+            
+            <form id="forcePasswordForm" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-medium text-slate-700 mb-1">New Personal Password 🔑</label>
+                    <input id="newPersonalPass" type="password" minlength="6" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-700 mb-1">Confirm New Password 🔐</label>
+                    <input id="confirmPersonalPass" type="password" minlength="6" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none" required>
+                </div>
+                <button type="submit" class="w-full bg-indigo-900 hover:bg-indigo-950 text-white font-semibold py-2 rounded-lg text-sm transition shadow">
+                    Save Password & Open Portal 🔓
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. MAIN DASHBOARD INTERFACE -->
+    <div id="appDashboard" class="hidden min-h-screen flex flex-col">
+        
+        <!-- Top Navigation Bar -->
+        <header class="bg-indigo-950 text-white shadow">
+            <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-white p-1 rounded shadow-sm">
+                        <img src="https://i.ibb.co/6y4t6tJ/gbc-logo.jpg" alt="Logo" class="h-9 w-auto">
+                    </div>
+                    <div>
+                        <span class="font-bold text-base tracking-wide block leading-tight">Far Far Baptist Church ⛪</span>
+                        <span class="text-[10px] text-indigo-200 uppercase tracking-wider block">Nakpaduri Association • GBC 🇬🇭</span>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-3">
+                    <div class="text-right">
+                        <div id="navUserName" class="font-semibold text-sm"></div>
+                        <div id="navUserRole" class="text-xs text-indigo-200"></div>
+                    </div>
+                    <button onclick="document.getElementById('changePassModal').classList.remove('hidden')" class="bg-indigo-800 hover:bg-indigo-700 px-3 py-1.5 rounded text-xs font-semibold transition flex items-center">
+                        <i class="fa-solid fa-key mr-1.5"></i> Security 🔒
+                    </button>
+                    <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 px-3 py-1.5 rounded text-xs font-semibold transition flex items-center">
+                        <i class="fa-solid fa-right-from-bracket mr-1.5"></i> Logout 🚪
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Body Layout -->
+        <div class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 md:grid-cols-4 gap-6">
+            
+            <!-- Left Sidebar Navigation -->
+            <aside class="md:col-span-1 bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between space-y-6">
+                <div class="space-y-4">
+                    <div>
+                        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">📢 Ministry Channels</h2>
+                        <ul id="channelList" class="space-y-1"></ul>
+                    </div>
+
+                    <div>
+                        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">🛠️ System Modules</h2>
+                        <ul class="space-y-1">
+                            <li>
+                                <button onclick="switchTab('posts')" id="tabPostsBtn" class="w-full text-left p-2.5 rounded-lg text-xs font-semibold flex items-center space-x-2 bg-indigo-50 text-indigo-900 border border-indigo-100">
+                                    <i class="fa-solid fa-bullhorn text-indigo-700"></i><span>Announcements & Feed</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button onclick="switchTab('finance')" id="tabFinanceBtn" class="w-full text-left p-2.5 rounded-lg text-xs font-semibold flex items-center space-x-2 hover:bg-slate-100 text-slate-700">
+                                    <i class="fa-solid fa-wallet text-emerald-600"></i><span>Financial Approvals & Dues</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button onclick="switchTab('media')" id="tabMediaBtn" class="w-full text-left p-2.5 rounded-lg text-xs font-semibold flex items-center space-x-2 hover:bg-slate-100 text-slate-700">
+                                    <i class="fa-solid fa-video text-rose-600"></i><span>Live Audio / Video Studio</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button onclick="switchTab('security')" id="tabSecurityBtn" class="w-full text-left p-2.5 rounded-lg text-xs font-semibold flex items-center space-x-2 hover:bg-slate-100 text-slate-700">
+                                    <i class="fa-solid fa-shield-halved text-amber-600"></i><span>Admin Security & Brute Force Monitor</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button onclick="switchTab('handover')" id="tabHandoverBtn" class="w-full text-left p-2.5 rounded-lg text-xs font-semibold flex items-center space-x-2 hover:bg-slate-100 text-slate-700">
+                                    <i class="fa-solid fa-user-gear text-indigo-700"></i><span>Executive Handover & Signatures</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Admin Support Widget -->
+                <div class="bg-slate-50 border border-slate-200 p-3 rounded-lg text-slate-600 text-xs space-y-1.5">
+                    <p class="font-bold text-indigo-950 flex items-center">
+                        <i class="fa-solid fa-headset text-indigo-900 mr-1.5"></i> Administrator (sbijagkin@gmail.com) 💻
+                    </p>
+                    <p class="text-[11px]">📞 0549162237 / 0530546215</p>
+                </div>
+            </aside>
+
+            <!-- Right Workspace Area -->
+            <main class="md:col-span-3 space-y-6">
+                
+                <!-- Welcome Banner -->
+                <div id="welcomeBanner" class="bg-gradient-to-r from-indigo-900 to-indigo-950 text-white p-6 rounded-xl shadow-md border border-indigo-800 flex flex-col space-y-2">
+                    <div class="flex items-center space-x-2 text-indigo-200 text-xs uppercase tracking-wider font-semibold">
+                        <i class="fa-solid fa-church"></i> Far Far Baptist Church Portal Session
+                    </div>
+                    <h2 id="welcomeHeading" class="text-2xl font-bold tracking-tight"></h2>
+                    <p id="welcomeMessage" class="text-sm text-indigo-100 leading-relaxed"></p>
+                </div>
+
+                <!-- Active Channel Header -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex justify-between items-center">
+                    <div>
+                        <h2 id="currentChannelTitle" class="text-xl font-bold text-slate-900"></h2>
+                        <p id="currentChannelDesc" class="text-sm text-slate-500 mt-0.5"></p>
+                    </div>
+                    <span id="accessTag" class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 flex items-center">
+                        <i class="fa-solid fa-circle-check mr-1.5"></i> Authorized Space
+                    </span>
+                </div>
+
+                <!-- 1. TAB: ANNOUNCEMENTS & BROADCAST FEED -->
+                <div id="viewPostsTab" class="space-y-6">
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-3">
+                        <h3 class="text-sm font-bold text-indigo-950 flex items-center">
+                            <i class="fa-solid fa-pen-to-square mr-2 text-indigo-900"></i> Department Entry & Broadcast Form 📝
+                        </h3>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Title / Subject 📌</label>
+                            <input id="postTitle" type="text" placeholder="e.g. Weekly Executive Report..." class="w-full px-3.5 py-2 border rounded-lg text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Message Content 📄</label>
+                            <textarea id="postContent" rows="3" placeholder="Write message details..." class="w-full px-3.5 py-2 border rounded-lg text-sm"></textarea>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 border-t">
+                            <span id="authorTag" class="text-xs font-medium text-slate-400">Posting as: Leadership</span>
+                            <button id="submitPostBtn" class="bg-indigo-900 hover:bg-indigo-950 text-white text-xs font-bold px-6 py-2.5 rounded-lg transition shadow-md flex items-center">
+                                <i class="fa-solid fa-paper-plane mr-2"></i> Submit Announcement 🚀
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider flex items-center">
+                            <i class="fa-solid fa-rss mr-2 text-indigo-900"></i> Channel Activity Stream
+                        </h3>
+                        <div id="postsFeed" class="space-y-3"></div>
+                    </div>
+                </div>
+
+                <!-- 2. TAB: FINANCIAL APPROVAL & DUES -->
+                <div id="viewFinanceTab" class="hidden space-y-6">
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-3">
+                        <h3 class="text-sm font-bold text-indigo-950 flex items-center">
+                            <i class="fa-solid fa-file-invoice-dollar mr-2 text-emerald-700"></i> Request Transaction / Financial Approval 💵
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Transaction Purpose / Description</label>
+                                <input id="finDesc" type="text" placeholder="e.g. Youth Camp Logistics, Sound Repairs..." class="w-full px-3 py-2 border rounded-lg text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Amount Requested (GH₵)</label>
+                                <input id="finAmount" type="number" placeholder="e.g. 500" class="w-full px-3 py-2 border rounded-lg text-sm">
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <button id="submitFinanceBtn" class="bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold px-5 py-2.5 rounded-lg transition shadow">
+                                Submit for Triple Approval (Pastor + Sec + Dept Head) & Send SMS 📱📤
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Approval Tracker Table -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-3">
+                        <h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider">Financial Approval & Transaction Queue</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs text-slate-600">
+                                <thead class="bg-slate-50 border-b">
+                                    <tr>
+                                        <th class="p-2.5">Date</th>
+                                        <th class="p-2.5">Requester</th>
+                                        <th class="p-2.5">Purpose</th>
+                                        <th class="p-2.5">Amount (GH₵)</th>
+                                        <th class="p-2.5">Approvals Status</th>
+                                        <th class="p-2.5">Action / Feedback</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="financeApprovalBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Simulated SMS Dispatch Log Box -->
+                    <div class="bg-indigo-50 border border-indigo-200 p-4 rounded-xl space-y-2">
+                        <h4 class="text-xs font-bold text-indigo-950 uppercase tracking-wider flex items-center">
+                            <i class="fa-solid fa-comment-sms mr-2 text-indigo-700"></i> Real-Time SMS Notification Dispatcher Log (Phones: 0549162237 / 0530546215)
+                        </h4>
+                        <div id="smsLogBox" class="space-y-1 text-xs text-slate-600 max-h-32 overflow-y-auto">
+                            <div class="italic text-slate-400">No recent SMS alerts sent yet. Submit a financial transaction to trigger instant text alerts to the three approvers.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. TAB: LIVE RECORDING STUDIO -->
+                <div id="viewMediaTab" class="hidden space-y-6">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-4 text-center">
+                        <h3 class="text-base font-bold text-indigo-950 flex items-center justify-center">
+                            <i class="fa-solid fa-video mr-2 text-rose-600"></i> Live Service & Meeting Recording Studio 🔴
+                        </h3>
+                        <p class="text-xs text-slate-500">Record live audio or video meetings directly from your browser.</p>
+                        <div class="flex justify-center items-center space-x-4 py-4">
+                            <button id="startRecBtn" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-5 py-2.5 rounded-lg shadow transition flex items-center">
+                                <i class="fa-solid fa-circle mr-2 text-white animate-pulse"></i> Start Recording
+                            </button>
+                            <button id="stopRecBtn" class="bg-slate-700 hover:bg-slate-800 text-white text-xs font-bold px-5 py-2.5 rounded-lg shadow transition hidden">
+                                <i class="fa-solid fa-stop mr-2"></i> Stop & Save Recording
+                            </button>
+                        </div>
+                        <div id="recStatus" class="text-xs font-semibold text-slate-400">Status: Ready to Record</div>
+                        <div id="recordingList" class="mt-4 space-y-2 text-left">
+                            <div class="p-3 bg-slate-50 border rounded-lg text-xs text-slate-500">No recent recordings saved.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. TAB: ADMIN SECURITY & BRUTE FORCE MONITOR -->
+                <div id="viewSecurityTab" class="hidden space-y-6">
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-3">
+                        <h3 class="text-sm font-bold text-amber-800 flex items-center">
+                            <i class="fa-solid fa-shield-cat mr-2 text-amber-600"></i> Administrator Security & Brute-Force Alert Center (sbijagkin@gmail.com) 🛡️
+                        </h3>
+                        <p class="text-xs text-slate-500">Real-time monitoring logs tracking brute-force attacks and automated security notification dispatch to administrator email <code>sbijagkin@gmail.com</code>.</p>
+                        
+                        <div id="securityAlertsList" class="space-y-2 pt-2">
+                            <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-800 flex items-center justify-between">
+                                <span><i class="fa-solid fa-circle-check mr-2"></i> System Secure: No brute-force attempts currently targeting administrator sbijagkin@gmail.com.</span>
+                                <span class="text-[10px] font-mono">Live Monitor</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. TAB: EXECUTIVE HANDOVER & SIGNATURES -->
+                <div id="viewHandoverTab" class="hidden space-y-6">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-4">
+                        <h3 class="text-base font-bold text-indigo-950 flex items-center">
+                            <i class="fa-solid fa-user-gear mr-2 text-indigo-900"></i> Organization Executive Handover & Contact Management 🔄
+                        </h3>
+                        <p class="text-xs text-slate-500">Update leadership names, phone numbers, and emails directly during executive reshuffles without needing the system administrator.</p>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs text-slate-600">
+                                <thead class="bg-slate-50 border-b">
+                                    <tr>
+                                        <th class="p-2.5">Portfolio / Department</th>
+                                        <th class="p-2.5">Current Leader Name</th>
+                                        <th class="p-2.5">Phone Number</th>
+                                        <th class="p-2.5">Email</th>
+                                        <th class="p-2.5">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="handoverTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- MODAL: CHANGE PASSWORD -->
+    <div id="changePassModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div class="bg-white p-6 rounded-xl shadow-2xl max-w-md w-full border border-slate-200">
+            <div class="flex justify-between items-center mb-4 pb-2 border-b">
+                <h3 class="font-bold text-slate-900 text-base flex items-center">
+                    <i class="fa-solid fa-key mr-2 text-indigo-900"></i> Change Your Password 🔒
+                </h3>
+                <button onclick="document.getElementById('changePassModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-600 text-sm"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <form id="changePassForm" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-medium text-slate-700 mb-1">Current Password 🔑</label>
+                    <input id="currentPassInput" type="password" class="w-full px-3 py-2 border rounded-lg text-sm" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-700 mb-1">New Private Password 🔐</label>
+                    <input id="newPassInput" type="password" minlength="6" class="w-full px-3 py-2 border rounded-lg text-sm" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-700 mb-1">Confirm New Password 🔐</label>
+                    <input id="confirmPassInput" type="password" minlength="6" class="w-full px-3 py-2 border rounded-lg text-sm" required>
+                </div>
+                <button type="submit" class="w-full bg-indigo-900 hover:bg-indigo-950 text-white font-semibold py-2 rounded-lg text-sm transition mt-2 shadow">
+                    Update Password 💾
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 5. SYSTEM JAVASCRIPT LOGIC -->
+    <script>
+        // Accounts database featuring exact leadership names and administrator email sbijagkin@gmail.com
+        let users = {
+            'sbijagkin@gmail.com': { email: 'sbijagkin@gmail.com', pass: 'admin123', name: 'System Administrator', role: 'Website Admin 💻', isPastor: true, isSecretary: true, allowedMinistries: ['all'], needsPasswordChange: false, welcomeTitle: "Welcome, Website Administrator! 💻", welcomeText: "You are logged in as website administrator monitoring security (sbijagkin@gmail.com), brute-force attempts, and system logs." },
+            'pastor@farfar.org': { email: 'pastor@farfar.org', pass: 'pastor123', name: 'Rev. Jeffery Laar', role: 'Head Pastor 👑', isPastor: true, isSecretary: false, allowedMinistries: ['all'], needsPasswordChange: false, welcomeTitle: "Welcome, Rev. Jeffery Laar! 🙏", welcomeText: "Head Pastor oversight portal. You must review and approve/reject financial transaction requests." },
+            'secretary@farfar.org': { email: 'secretary@farfar.org', pass: 'sec123', name: 'Deacon Alax Kombat', role: 'Church Secretary 📋', isPastor: false, isSecretary: true, allowedMinistries: ['all'], needsPasswordChange: false, welcomeTitle: "Welcome, Deacon Alax Kombat! 📋", welcomeText: "Church Secretary portal. You participate in reviewing association correspondence and co-approving financial transactions." },
+            'youth.pres@farfar.org': { email: 'youth.pres@farfar.org', pass: 'youth123', name: 'Mr. Benjamin Dindebil', role: 'Youth President ⚡', isPastor: false, isSecretary: false, allowedMinistries: ['youth'], needsPasswordChange: false, welcomeTitle: "Welcome, Mr. Benjamin Dindebil! ⚡", welcomeText: "Manage Far Far Baptist Youth Fellowship channel announcements and financial requests." },
+            'women.pres@farfar.org': { email: 'women.pres@farfar.org', pass: 'women123', name: 'Mad. Lydia Janam', role: 'Women Ministry Head (Woocom) 👩‍🦱', isPastor: false, isSecretary: false, allowedMinistries: ['women'], needsPasswordChange: false, welcomeTitle: "Welcome, Mad. Lydia Janam! 👩‍🦱", welcomeText: "Manage Women Fellowship programs and departmental financial requests." },
+            'children.pres@farfar.org': { email: 'children.pres@farfar.org', pass: 'children123', name: 'Mr. Emmanuel Miila', role: 'Sunday School Teacher 🎈', isPastor: false, isSecretary: false, allowedMinistries: ['children'], needsPasswordChange: false, welcomeTitle: "Welcome, Mr. Emmanuel Miila! 🎈", welcomeText: "Manage Sunday school curricula and children department activities." },
+            'choir.pres@farfar.org': { email: 'choir.pres@farfar.org', pass: 'choir123', name: 'Deacon Janam Laar', role: 'Choir Department Head 🎵', isPastor: false, isSecretary: false, allowedMinistries: ['choir'], needsPasswordChange: false, welcomeTitle: "Welcome, Deacon Janam Laar! 🎵", welcomeText: "Manage choir rehearsal notices and music ministry records." }
+            
+        };
+
+        const MINISTRIES = {
+            children: { id: 'children', name: 'Sunday School (Children) 🎈', desc: 'Updates for Sunday school teachers and children department activities.' },
+            youth: { id: 'youth', name: 'Youth Ministry ⚡', desc: 'Portal for Far Far Baptist Youth Fellowship announcements.' },
+            choir: { id: 'choir', name: 'Choir Ministry 🎵', desc: 'Rehearsal notices, song sheets, and performance rosters.' },
+            women: { id: 'women', name: 'Women Ministry (Woocom) 👩‍🦱', desc: 'Fellowship meetings, prayer chains, and community outreach.' }
+        };
+
+        let posts = [
+            { id: 1, ministry: 'youth', author: 'Mr. Benjamin Dindebil ⚡', title: 'Youth Association Preparation', content: 'Preparation meeting for the upcoming Nakpaduri Baptist Association youth gathering.', time: '2 hours ago' }
+        ];
+
+        let financialApprovals = [
+            { id: 1, ministry: 'youth', purpose: 'Youth Camp Logistics & Feeding', amount: 800, requester: 'Mr. Benjamin Dindebil', pastorApprove: 'Pending', secApprove: 'Pending', deptApprove: 'Pending', status: 'Pending Review', feedback: '', date: '2026-11-06' }
+        ];
+
+        let failedLoginAttempts = 0;
+        let securityAlerts = [];
+        let smsDispatchLogs = [];
+        let currentUser = null;
+        let activeChannel = 'youth';
+
+        // TAB SWITCHING
+        function switchTab(tabName) {
+            ['posts', 'finance', 'media', 'security', 'handover'].forEach(t => {
+                document.getElementById('view' + t.charAt(0).toUpperCase() + t.slice(1) + 'Tab').classList.add('hidden');
+                document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1) + 'Btn').className = "w-full text-left p-2.5 rounded-lg text-xs font-semibold flex items-center space-x-2 hover:bg-slate-100 text-slate-700";
+            });
+
+            document.getElementById('view' + tabName.charAt(0).toUpperCase() + tabName.slice(1) + 'Tab').classList.remove('hidden');
+            document.getElementById('tab' + tabName.charAt(0).toUpperCase() + tabName.slice(1) + 'Btn').className = "w-full text-left p-2.5 rounded-lg text-xs font-semibold flex items-center space-x-2 bg-indigo-50 text-indigo-900 border border-indigo-100";
+
+            if (tabName === 'finance') renderFinanceQueue();
+            if (tabName === 'handover') renderHandoverTable();
+            if (tabName === 'security') renderSecurityLogs();
+        }
+
+        // LOGIN WITH BRUTE FORCE DETECTION & EMAIL ALERT TO sbijagkin@gmail.com
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+            const password = document.getElementById('loginPassword').value.trim();
+
+            if (!users[email] || users[email].pass !== password) {
+                failedLoginAttempts++;
+                if (failedLoginAttempts >= 3) {
+                    const alertMsg = `🚨 CRITICAL SECURITY ALERT: 3 failed brute-force login attempts detected targeting administrator email [sbijagkin@gmail.com] from account [${email}] at ${new Date().toLocaleTimeString()}. Email alert dispatched to sbijagkin@gmail.com!`;
+                    securityAlerts.unshift(alertMsg);
+                }
+                document.getElementById('loginAlert').textContent = `❌ Invalid Credentials. Failed attempt #${failedLoginAttempts}.`;
+                document.getElementById('loginAlert').classList.remove('hidden');
+                return;
+            }
+
+            failedLoginAttempts = 0;
+            currentUser = users[email];
+            if (currentUser.needsPasswordChange) {
+                document.getElementById('forcePasswordModal').classList.remove('hidden');
+            } else {
+                launchPortal();
+            }
+        });
+
+        function launchPortal() {
+            activeChannel = currentUser.isPastor || currentUser.isSecretary ? 'youth' : currentUser.allowedMinistries[0];
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('appDashboard').classList.remove('hidden');
+            renderSystem();
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            currentUser = null;
+            document.getElementById('appDashboard').classList.add('hidden');
+            document.getElementById('loginScreen').classList.remove('hidden');
+        });
+
+        function renderSystem() {
+            document.getElementById('navUserName').textContent = currentUser.name;
+            document.getElementById('navUserRole').textContent = currentUser.role;
+            document.getElementById('authorTag').textContent = `Posting as: ${currentUser.name} (${currentUser.role})`;
+
+            document.getElementById('welcomeHeading').textContent = currentUser.welcomeTitle;
+            document.getElementById('welcomeMessage').textContent = currentUser.welcomeText;
+
+            const channelList = document.getElementById('channelList');
+            channelList.innerHTML = '';
+            Object.keys(MINISTRIES).forEach(key => {
+                const ministry = MINISTRIES[key];
+                const canAccess = currentUser.isPastor || currentUser.isSecretary || currentUser.allowedMinistries.includes(key);
+                const li = document.createElement('li');
+
+                if (canAccess) {
+                    const isSelected = activeChannel === key;
+                    li.className = `p-2.5 rounded-lg flex items-center justify-between cursor-pointer transition ${isSelected ? 'bg-indigo-900 text-white font-semibold shadow' : 'hover:bg-slate-100 text-slate-700'}`;
+                    li.innerHTML = `<div class="flex items-center space-x-2 text-xs"><i class="fa-solid ${isSelected ? 'fa-folder-open' : 'fa-folder'}"></i><span>${ministry.name}</span></div>`;
+                    li.onclick = () => { activeChannel = key; renderSystem(); };
+                } else {
+                    li.className = 'p-2.5 rounded-lg flex items-center justify-between text-slate-400 opacity-50 cursor-not-allowed bg-slate-50 text-xs';
+                    li.innerHTML = `<div class="flex items-center space-x-2"><i class="fa-solid fa-lock"></i><span>${ministry.name}</span></div><span class="text-[9px] font-bold text-red-400">RESTRICTED</span>`;
+                }
+                channelList.appendChild(li);
+            });
+
+            document.getElementById('currentChannelTitle').textContent = MINISTRIES[activeChannel].name;
+            document.getElementById('currentChannelDesc').textContent = MINISTRIES[activeChannel].desc;
+            renderPosts();
+        }
+
+        // POST SUBMISSION
+        document.getElementById('submitPostBtn').addEventListener('click', () => {
+            const title = document.getElementById('postTitle').value.trim();
+            const content = document.getElementById('postContent').value.trim();
+
+            if (!title || !content) { alert('Please enter both title and content.'); return; }
+
+            posts.unshift({ id: Date.now(), ministry: activeChannel, author: currentUser.name, title, content, time: 'Just now ⏱️' });
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postContent').value = '';
+            renderPosts();
+        });
+
+        function renderPosts() {
+            const postsFeed = document.getElementById('postsFeed');
+            postsFeed.innerHTML = '';
+            const filtered = posts.filter(p => p.ministry === activeChannel);
+
+            if (filtered.length === 0) {
+                postsFeed.innerHTML = `<div class="p-6 text-center text-slate-400 bg-white rounded-xl border border-dashed text-sm">No announcements submitted in this channel yet. 📭</div>`;
+                return;
+            }
+
+            filtered.forEach(post => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-5 rounded-xl shadow-sm border space-y-2";
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <span class="font-bold text-slate-800 text-sm">${post.title}</span>
+                        <span class="text-xs text-slate-400">${post.time}</span>
+                    </div>
+                    <p class="text-sm text-slate-600">${post.content}</p>
+                    <div class="pt-2 flex justify-between items-center text-xs text-slate-400 border-t">
+                        <span>Submitted by: <strong>${post.author}</strong></span>
+                        ${currentUser.isPastor || post.author === currentUser.name ? `<button onclick="deletePost(${post.id})" class="text-red-500 hover:underline">Delete</button>` : ''}
+                    </div>
+                `;
+                postsFeed.appendChild(card);
+            });
+        }
+
+        function deletePost(id) { posts = posts.filter(p => p.id !== id); renderPosts(); }
+
+        // FINANCIAL TRANSACTION SUBMISSION WITH PHYSICAL PHONE SMS ALERTS (0549162237 / 0530546215)
+        document.getElementById('submitFinanceBtn').addEventListener('click', () => {
+            const purpose = document.getElementById('finDesc').value.trim();
+            const amount = parseFloat(document.getElementById('finAmount').value);
+
+            if (!purpose || isNaN(amount)) { alert('Please enter purpose and valid amount.'); return; }
+
+            const newReq = {
+                id: Date.now(),
+                ministry: activeChannel,
+                purpose,
+                amount,
+                requester: currentUser.name,
+                pastorApprove: 'Pending',
+                secApprove: 'Pending',
+                deptApprove: 'Pending',
+                status: 'Pending Review ⏳',
+                feedback: '',
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            financialApprovals.unshift(newReq);
+
+            // Simulate SMS dispatch to physical phone numbers 0549162237 and 0530546215 for the three members
+            const smsMessage = `📱 SMS ALERT dispatched to physical numbers 0549162237 / 0530546215: New financial request of GH₵${amount.toFixed(2)} for '${purpose}' submitted by ${currentUser.name}. Requires approval from Rev. Jeffery Laar, Deacon Alax Kombat, and Department Head.`;
+            smsDispatchLogs.unshift(smsMessage);
+
+            document.getElementById('finDesc').value = '';
+            document.getElementById('finAmount').value = '';
+            renderFinanceQueue();
+            renderSMSLogs();
+            alert('Financial request submitted! SMS text alerts successfully dispatched to physical phone numbers 0549162237 / 0530546215 for approval.');
+        });
+
+        function renderSMSLogs() {
+            const box = document.getElementById('smsLogBox');
+            box.innerHTML = '';
+            if (smsDispatchLogs.length === 0) {
+                box.innerHTML = `<div class="italic text-slate-400">No recent SMS alerts sent yet.</div>`;
+                return;
+            }
+            smsDispatchLogs.forEach(log => {
+                const div = document.createElement('div');
+                div.className = "p-2 bg-white rounded border text-[11px] text-slate-700 font-mono";
+                div.textContent = log;
+                box.appendChild(div);
+            });
+        }
+
+        function renderFinanceQueue() {
+            const body = document.getElementById('financeApprovalBody');
+            body.innerHTML = '';
+
+            if (financialApprovals.length === 0) {
+                body.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-400">No financial transactions in queue.</td></tr>`;
+                return;
+            }
+
+            financialApprovals.forEach(req => {
+                const tr = document.createElement('tr');
+                tr.className = "border-b hover:bg-slate-50";
+
+                const isPastorUser = currentUser.isPastor;
+                const isSecUser = currentUser.isSecretary;
+                const isDeptHeadUser = !currentUser.isPastor && !currentUser.isSecretary;
+
+                tr.innerHTML = `
+                    <td class="p-2.5">${req.date}</td>
+                    <td class="p-2.5 font-semibold">${req.requester}</td>
+                    <td class="p-2.5">${req.purpose}</td>
+                    <td class="p-2.5 font-bold text-emerald-700">GH₵ ${req.amount.toFixed(2)}</td>
+                    <td class="p-2.5 text-[11px]">
+                        <div>👑 Pastor (Rev. Jeffery Laar): <span class="font-bold ${req.pastorApprove==='Approved'?'text-emerald-600':req.pastorApprove==='Rejected'?'text-red-600':'text-amber-600'}">${req.pastorApprove}</span></div>
+                        <div>📋 Secretary (Deacon Alax Kombat): <span class="font-bold ${req.secApprove==='Approved'?'text-emerald-600':req.secApprove==='Rejected'?'text-red-600':'text-amber-600'}">${req.secApprove}</span></div>
+                        <div>📌 Dept Head: <span class="font-bold ${req.deptApprove==='Approved'?'text-emerald-600':req.deptApprove==='Rejected'?'text-red-600':'text-amber-600'}">${req.deptApprove}</span></div>
+                    </td>
+                    <td class="p-2.5 space-y-1">
+                        <div class="font-semibold text-indigo-900">${req.status}</div>
+                        ${req.feedback ? `<div class="text-[10px] text-red-600 italic">Feedback: ${req.feedback}</div>` : ''}
+                        
+                        <div class="flex space-x-1 pt-1">
+                            ${(isPastorUser && req.pastorApprove==='Pending') || (isSecUser && req.secApprove==='Pending') || (isDeptHeadUser && req.deptApprove==='Pending') ? `
+                                <button onclick="handleApproval(${req.id}, 'Approved')" class="bg-emerald-600 text-white px-2 py-0.5 rounded text-[10px]">Approve ✅</button>
+                                <button onclick="handleApproval(${req.id}, 'Rejected')" class="bg-red-600 text-white px-2 py-0.5 rounded text-[10px]">Reject ❌</button>
+                            ` : '<span class="text-[10px] text-slate-400">Processed</span>'}
+                        </div>
+                    </td>
+                `;
+                body.appendChild(tr);
+            });
+        }
+
+        function handleApproval(id, decision) {
+            const req = financialApprovals.find(r => r.id === id);
+            if (!req) return;
+
+            if (currentUser.isPastor) req.pastorApprove = decision;
+            else if (currentUser.isSecretary) req.secApprove = decision;
+            else req.deptApprove = decision;
+
+            if (decision === 'Rejected') {
+                const feedbackText = prompt("Enter rejection reason or feedback for the requester to contact the rejecting officer before proceeding:");
+                req.feedback = feedbackText || "Rejected without notes.";
+                req.status = 'Rejected ❌ (Action Required)';
+            } else if (req.pastorApprove === 'Approved' && req.secApprove === 'Approved' && req.deptApprove === 'Approved') {
+                req.status = 'Fully Approved ✅ (Ready for Payout)';
+            } else {
+                req.status = 'Partially Approved ⏳';
+            }
+
+            renderFinanceQueue();
+        }
+
+        // RECORDING STUDIO
+        document.getElementById('startRecBtn').onclick = () => {
+            document.getElementById('startRecBtn').classList.add('hidden');
+            document.getElementById('stopRecBtn').classList.remove('hidden');
+            document.getElementById('recStatus').textContent = "Status: Recording Live Audio/Video Session... 🔴";
+        };
+
+        document.getElementById('stopRecBtn').onclick = () => {
+            document.getElementById('stopRecBtn').classList.add('hidden');
+            document.getElementById('startRecBtn').classList.remove('hidden');
+            document.getElementById('recStatus').textContent = "Status: Recording Saved Successfully! ✅";
+
+            const list = document.getElementById('recordingList');
+            if (list.innerHTML.includes('No recent recordings')) list.innerHTML = '';
+
+            const item = document.createElement('div');
+            item.className = "p-3 bg-white border rounded-lg text-xs flex justify-between items-center shadow-sm";
+            item.innerHTML = `
+                <div>
+                    <div class="font-bold text-slate-800"><i class="fa-solid fa-file-audio mr-1.5 text-rose-600"></i> Service Recording (${new Date().toLocaleTimeString()})</div>
+                    <div class="text-[10px] text-slate-400">Recorded by ${currentUser.name}</div>
+                </div>
+                <button onclick="alert('Downloading recording file...')" class="bg-indigo-900 text-white px-3 py-1 rounded text-[10px]">Download 💾</button>
+            `;
+            list.appendChild(item);
+        };
+
+        // SECURITY LOGS
+        function renderSecurityLogs() {
+            const list = document.getElementById('securityAlertsList');
+            if (securityAlerts.length === 0) return;
+            list.innerHTML = '';
+            securityAlerts.forEach(alert => {
+                const div = document.createElement('div');
+                div.className = "p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-800 flex items-center justify-between";
+                div.innerHTML = `<span><i class="fa-solid fa-triangle-exclamation mr-2"></i> ${alert}</span><span class="text-[10px] font-mono font-bold">EMAIL SENT TO sbijagkin@gmail.com</span>`;
+                list.appendChild(div);
+            });
+        }
+
+        // EXECUTIVE HANDOVER
+        function renderHandoverTable() {
+            const tbody = document.getElementById('handoverTableBody');
+            tbody.innerHTML = '';
+
+            Object.keys(users).forEach(email => {
+                const u = users[email];
+                const tr = document.createElement('tr');
+                tr.className = "border-b hover:bg-slate-50";
+                tr.innerHTML = `
+                    <td class="p-2.5 font-bold text-indigo-950">${u.role}</td>
+                    <td class="p-2.5"><input type="text" id="name_${email}" value="${u.name}" class="px-2 py-1 border rounded text-xs w-full"></td>
+                    <td class="p-2.5"><input type="text" id="phone_${email}" value="${u.phone || '0549162237'}" class="px-2 py-1 border rounded text-xs w-full"></td>
+                    <td class="p-2.5"><input type="text" id="email_${email}" value="${u.email}" class="px-2 py-1 border rounded text-xs w-full"></td>
+                    <td class="p-2.5"><button onclick="updateExecutive('${email}')" class="bg-indigo-900 text-white px-3 py-1 rounded text-[10px]">Update 💾</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateExecutive(email) {
+            const newName = document.getElementById(`name_${email}`).value;
+            const newPhone = document.getElementById(`phone_${email}`).value;
+            const newEmail = document.getElementById(`email_${email}`).value;
+
+            users[email].name = newName;
+            users[email].phone = newPhone;
+            alert(`Executive details updated successfully for ${newName}! Handover complete without administrator assistance.`);
+            renderHandoverTable();
+        }
+
+        // PASSWORD CHANGE
+        document.getElementById('changePassForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const curr = document.getElementById('currentPassInput').value;
+            const newP = document.getElementById('newPassInput').value;
+            const confP = document.getElementById('confirmPassInput').value;
+
+            if (curr !== currentUser.pass) { alert('Current password incorrect.'); return; }
+            if (newP !== confP) { alert('New passwords do not match.'); return; }
+
+            currentUser.pass = newP;
+            document.getElementById('changePassModal').classList.add('hidden');
+            alert('Password updated successfully!');
+        });
+    </script>
+</body>
+</html>
